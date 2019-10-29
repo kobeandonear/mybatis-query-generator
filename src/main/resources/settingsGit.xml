@@ -131,7 +131,12 @@ under the License.
     </server>
     -->
     <server>
-      <id>github</id>
+      <id>sonatype-nexus-snapshots</id>
+      <username>kobeandonear</username>
+      <password>Anquandiyi1!</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-staging</id>
       <username>kobeandonear</username>
       <password>Anquandiyi1!</password>
     </server>
@@ -249,6 +254,16 @@ under the License.
       </properties>
     </profile>
     -->
+    <profile>
+      <id>nexus-release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>Anquandiyi1!</gpg.passphrase>
+      </properties>
+    </profile>
   </profiles>
 
   <!-- activeProfiles

@@ -3,10 +3,44 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.gdw.database</groupId>
     <artifactId>mybatis-query-generator</artifactId>
-    <version>1.0</version>
+    <version>1.0-RELEASE</version>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>
+        Iussoft Open API for Java
+        Copyright (C) https://github.com/kobeandonear
+        All rights reserved.
+    </description>
+    <url>https://github.com/kobeandonear</url>
+    <scm>
+        <connection>scm:git:git@github.com:kobeandonear</connection>
+        <developerConnection>scm:git:git@github.com:kobeandonear</developerConnection>
+        <url>scm:git:git@github.com:kobeandonear</url>
+    </scm>
+    <developers>
+        <developer>
+            <name>kobeandoonear</name>
+            <email>416036503@qq.com</email>
+        </developer>
+    </developers>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>release</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk-version>1.8</jdk-version>
@@ -37,100 +71,58 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>-->
+            <!--  必须配置 sonatype-->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype-nexus-staging</serverId> <!-- 等于上面Settings中server的id值。-->
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
             </plugin>
+            <!-- 必须配置  GPG-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <excludes>
-                        <exclude>conf/**</exclude>
-                        <exclude>swagger-ui/**</exclude>
-                        <exclude>mybatis/**</exclude>
-                        <exclude>**/*.xml</exclude>
-                        <exclude>**/*.properties</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-                <configuration>
-                    <!--配置文件的位置-->
-                    <configurationFile>src/main/resources/mybatis/generatorConfig.xml</configurationFile>
-                    <verbose>true</verbose>
-                    <overwrite>true</overwrite>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.40</version>
-                    </dependency>
-                    <!-- 分页插件-->
-                    <dependency>
-                        <groupId>com.xxg</groupId>
-                        <artifactId>mybatis-generator-plugin</artifactId>
-                        <version>1.0.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.1</version>
-                <configuration>
-                    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <message>Maven artifacts for ${project.version}</message>
-                    <noJekyll>true</noJekyll>
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-                    <branch>refs/heads/master</branch>
-                    <includes>
-                        <include>**/*</include>
-                    </includes>
-                    <repositoryName>OSSRH-52690</repositoryName>
-                    <!-- 对应github上创建的仓库名称 name -->
-                    <repositoryOwner>kobeandonear</repositoryOwner>
-                    <!-- github 仓库所有者 -->
-                </configuration>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
                 <executions>
                     <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
                         <goals>
-                            <goal>site</goal>
+                            <goal>sign</goal>
                         </goals>
-                        <phase>deploy</phase>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
-    <!--分页插件-->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>mybatis-generator-limit-plugin-mvn-repo</id>
-            <url>https://raw.github.com/wucao/mybatis-generator-limit-plugin/mvn-repo/</url>
-        </pluginRepository>
-    </pluginRepositories>
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>
@@ -146,36 +138,6 @@
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
             <version>1.10</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-jcl</artifactId>
-            <version>${log4j-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j-version}</version>
         </dependency>
         <dependency>
             <groupId>com.shekhargulati</groupId>
@@ -212,4 +174,6 @@
             <version>1.16.6</version>
         </dependency>
     </dependencies>
+
+
 </project>
