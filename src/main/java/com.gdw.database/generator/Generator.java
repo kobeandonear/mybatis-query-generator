@@ -1,7 +1,9 @@
 package com.gdw.database.generator;
 
-
-import com.gdw.database.annotation.*;
+import com.gdw.database.annotation.CriteriaInfo;
+import com.gdw.database.annotation.Ignore;
+import com.gdw.database.annotation.Operationype;
+import com.gdw.database.annotation.PropertyName;
 import com.gdw.database.operation.Operation;
 
 import java.lang.reflect.*;
@@ -69,7 +71,7 @@ public class Generator<T> {
                 operation = operationTypeAnnotation.value();
             }
             String ConditionMethod = "";
-            com.gdw.database.annotation.ConditionMethod conditionMethodAnnotation = field.getAnnotation(ConditionMethod.class);
+            com.gdw.database.annotation.ConditionMethod conditionMethodAnnotation = field.getAnnotation(com.gdw.database.annotation.ConditionMethod.class);
             if(conditionMethodAnnotation!=null){
                 ConditionMethod = conditionMethodAnnotation.value();
             }
