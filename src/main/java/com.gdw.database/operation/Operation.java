@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 public enum Operation {
-    EQUAL("equal_to"),NOTEQUAL("notEqual_to"),LIKE("like"),MORETHAN("greater_than"),LESSTHAN("less_than"),
+    EQUAL("equal_to"),NOTEQUAL("not_equal_to"),LIKE("like"),MORETHAN("greater_than"),LESSTHAN("less_than"),
     MORETHANOREQUAL("greater_than_or_equal_to"),LESSTHANOREQUAL("less_than_or_equal_to"),INCOLLECTON("in"),BEGIN("like"),END("like");
     private String value;
 
