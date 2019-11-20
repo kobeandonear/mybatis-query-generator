@@ -26,8 +26,7 @@ public class Generator<T> {
             "java.lang.Short",
             "java.lang.Byte",
             "java.lang.Boolean",
-            "java.lang.String",
-            "java.lang.Enum");
+            "java.lang.String");
     private String createCriteriaMethodName = "createCriteria";
     private String prefix = "";
     private String suffix = "";
@@ -52,7 +51,7 @@ public class Generator<T> {
             if(value==null){
                 continue;
             }
-            if(!types.contains(value.getClass().getName())&&!(value instanceof List)){
+            if(!types.contains(value.getClass().getName())&&!(value instanceof List)&&!(value instanceof Enum)){
                 continue;
             }
             ////////////////////////////////
@@ -66,17 +65,17 @@ public class Generator<T> {
                 propertyName = propertyNameAnnotation.value();
             }
             Operation operation = Operation.EQUAL;
-            Operationype operationTypeAnnotation = field.getAnnotation(Operationype.class);
+            OperationType operationTypeAnnotation = field.getAnnotation(OperationType.class);
             if(operationTypeAnnotation!=null){
                 operation = operationTypeAnnotation.value();
             }
-            String ConditionMethod = "";
-            com.gdw.database.annotation.ConditionMethod conditionMethodAnnotation = field.getAnnotation(com.gdw.database.annotation.ConditionMethod.class);
+            String conditionMethod = "";
+            ConditionMethod conditionMethodAnnotation = field.getAnnotation(ConditionMethod.class);
             if(conditionMethodAnnotation!=null){
-                ConditionMethod = conditionMethodAnnotation.value();
+                conditionMethod = conditionMethodAnnotation.value();
             }
 
-            MetaData metaData = new MetaData(propertyName,operation,ConditionMethod,value,criteria,prefix,suffix);
+            MetaData metaData = new MetaData(propertyName,operation,conditionMethod,value,criteria,prefix,suffix,field.getType());
             metaData.execute();
         }
         return instance;
