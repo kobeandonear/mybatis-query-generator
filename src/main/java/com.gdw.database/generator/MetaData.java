@@ -43,7 +43,7 @@ class MetaData {
                 if (operation == Operation.INCOLLECTON) {
                     String methodNameLocal = "and_" + prefix + "_" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name) + "_" + suffix + "_in";
                     methodNameLocal = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, methodNameLocal);
-                    method = criteria.getClass().getDeclaredMethod(methodNameLocal);
+                    method = criteria.getClass().getDeclaredMethod(methodNameLocal,fieldType);
                 } else {
                     throw new NoSuchMethodException("condition is assignableFrom Collection , but operation does not match that, name is " + name);
                 }
@@ -63,7 +63,7 @@ class MetaData {
                 }
                 String methodNameLocal = "and_" + prefix + "_" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name) + "_" + suffix + "_" + operation.getValue();
                 methodNameLocal = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, methodNameLocal);
-                method = criteria.getClass().getMethod(methodNameLocal,value.getClass());
+                method = criteria.getClass().getMethod(methodNameLocal,fieldType);
             }
         }
         if (method==null){
