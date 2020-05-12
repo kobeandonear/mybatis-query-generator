@@ -34,6 +34,12 @@ public class Generator {
     private String suffix = "";
 
 
+    /**
+     * @param obj 查询类对象
+     * @param CriteriaClass 需要生成的Criteria 的class对象
+     * @param <T>
+     * @return 返回生成的Criteria对象
+     */
     public<T> T generate(Object obj,Class<T> CriteriaClass) {
         try {
             CriteriaInfo criteriaInfoAnnotation = obj.getClass().getAnnotation(CriteriaInfo.class);

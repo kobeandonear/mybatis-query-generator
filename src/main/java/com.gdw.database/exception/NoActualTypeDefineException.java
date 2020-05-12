@@ -6,6 +6,7 @@ package com.gdw.database.exception;
  * 不生产代码 做bug的搬运工
  *
  * @author guowenhao6
+ * 暂时没有用
  */
 public class NoActualTypeDefineException extends Exception {
 }
