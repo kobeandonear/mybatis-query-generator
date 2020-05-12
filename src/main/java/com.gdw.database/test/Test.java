@@ -18,8 +18,8 @@ public class Test {
         query.setBwLibId(2L);
         query.setDataType(com.gdw.database.test.DataTypeEnum.BLACK);
         query.setMemo("123");
-        Generator<com.gdw.database.test.TpIpAntiInstanceBwGeoCriteria> geoCriteriaGenerator = new Generator<>();
-        com.gdw.database.test.TpIpAntiInstanceBwGeoCriteria generate = geoCriteriaGenerator.generate(query, com.gdw.database.test.TpIpAntiInstanceBwGeoCriteria.class);
+        Generator geoCriteriaGenerator = new Generator();
+        TpIpAntiInstanceBwGeoCriteria generate = geoCriteriaGenerator.generate(query, TpIpAntiInstanceBwGeoCriteria.class);
         generate.setOffset(13);
     }
 }

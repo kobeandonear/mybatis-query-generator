@@ -1,14 +1,16 @@
 package com.gdw.database.generator;
 
+
+import com.gdw.database.annotation.ConditionMethod;
 import com.gdw.database.annotation.CriteriaInfo;
 import com.gdw.database.annotation.Ignore;
-import com.gdw.database.annotation.Operationype;
+import com.gdw.database.annotation.OperationType;
 import com.gdw.database.annotation.PropertyName;
 import com.gdw.database.operation.Operation;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 /**
