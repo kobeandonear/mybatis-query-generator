@@ -32,6 +32,7 @@ class MetaData {
     private Object criteria;
     private String prefix;
     private String suffix;
+    private Class fieldType;
 
 
     void execute() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -70,7 +71,9 @@ class MetaData {
             throw new NoSuchMethodException("no method ,property name is " + name);
         }
         method.setAccessible(true);
-        if(operation==Operation.BEGIN){
+        if(operation==Operation.LIKE){
+            method.invoke(criteria, "%" + value + "%");
+        }else if(operation==Operation.BEGIN){
             method.invoke(criteria, value + "%");
         }else if(operation==Operation.END){
             method.invoke(criteria, "%" + value);
