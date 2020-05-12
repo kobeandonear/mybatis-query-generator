@@ -1,11 +1,7 @@
 package com.gdw.database.generator;
 
 
-import com.gdw.database.annotation.ConditionMethod;
-import com.gdw.database.annotation.CriteriaInfo;
-import com.gdw.database.annotation.Ignore;
-import com.gdw.database.annotation.OperationType;
-import com.gdw.database.annotation.PropertyName;
+import com.gdw.database.annotation.*;
 import com.gdw.database.operation.Operation;
 
 import java.lang.reflect.Field;
@@ -21,7 +17,7 @@ import java.util.List;
  * @author guowenhao6
  */
 public class Generator {
-    private static final List<String> types = Arrays.asList("java.lang.Integer",
+    private static final List<String> TYPES = Arrays.asList("java.lang.Integer",
             "java.lang.Double",
             "java.lang.Float",
             "java.lang.Long",
@@ -36,11 +32,11 @@ public class Generator {
 
     /**
      * @param obj 查询类对象
-     * @param CriteriaClass 需要生成的Criteria 的class对象
+     * @param criteriaClass 需要生成的Criteria 的class对象
      * @param <T>
      * @return 返回生成的Criteria对象
      */
-    public<T> T generate(Object obj,Class<T> CriteriaClass) {
+    public <T> T generate(Object obj, Class<T> criteriaClass) {
         try {
             CriteriaInfo criteriaInfoAnnotation = obj.getClass().getAnnotation(CriteriaInfo.class);
             if (criteriaInfoAnnotation != null) {
@@ -48,8 +44,8 @@ public class Generator {
                 prefix = criteriaInfoAnnotation.fieldPrefix();
                 suffix = criteriaInfoAnnotation.fieldSuffix();
             }
-            T instance = CriteriaClass.newInstance();
-            Method createCriteria = CriteriaClass.getDeclaredMethod(createCriteriaMethodName);
+            T instance = criteriaClass.newInstance();
+            Method createCriteria = criteriaClass.getDeclaredMethod(createCriteriaMethodName);
             createCriteria.setAccessible(true);
             Object criteria = createCriteria.invoke(instance);
 
@@ -60,7 +56,7 @@ public class Generator {
                 if (value == null) {
                     continue;
                 }
-                if (!types.contains(value.getClass().getName()) && !(value instanceof List) && !(value instanceof Enum)) {
+                if (!TYPES.contains(value.getClass().getName()) && !(value instanceof List) && !(value instanceof Enum)) {
                     continue;
                 }
                 ////////////////////////////////
